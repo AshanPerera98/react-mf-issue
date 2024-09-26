@@ -16,10 +16,14 @@ module.exports = {
           remotes: {
             SupportApp: "SupportApp@http://localhost:3002/remoteEntry.js",
           },
-          shared: {
-            react: { singleton: true, eager: true },
-            "react-router": { singleton: true, eager: true },
-          },
+          shared: [
+            {
+              react: { singleton: true, eager: true },
+              "react-router": { singleton: true, eager: true },
+            },
+            // below line is the breaking change
+            "./src/App",
+          ],
         }),
       ],
     },
