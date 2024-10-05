@@ -20,9 +20,9 @@ module.exports = {
             {
               react: { singleton: true, eager: true },
               "react-router": { singleton: true, eager: true },
+              redux: { singleton: true, eager: true },
+              "react-redux": { singleton: true, eager: true },
             },
-            // below line is the breaking change
-            "./src/App",
           ],
         }),
       ],
