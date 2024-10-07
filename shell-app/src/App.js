@@ -12,26 +12,44 @@ init({
   ],
 });
 
-function App() {
-  const [RemoteApp, setRemoteApp] = useState(null);
+function useDynamicImport({ module, scope }) {
+  const [component, setComponent] = useState(null);
 
   useEffect(() => {
+    if (!module || !scope) return;
+
     const loadComponent = async () => {
       try {
-        const { default: Component } = await loadRemote(`RemoteApp/App`);
-        setRemoteApp(() => Component);
+        const { default: Component } = await loadRemote(`${scope}/${module}`);
+        setComponent(() => Component);
       } catch (error) {
-        console.error(`Error loading remote module RemoteApp/App:`, error);
+        console.error(`Error loading remote module ${scope}/${module}:`, error);
       }
     };
 
     loadComponent();
-  });
+  }, [module, scope]);
+
+  return component;
+}
+
+function App() {
+  const [{ module, scope }, setSystem] = useState({});
+
+  const setApp = () => {
+    setSystem({
+      scope: "RemoteApp",
+      module: "App",
+    });
+  };
+
+  const Component = useDynamicImport({ module, scope });
 
   return (
     <div className="App">
-      <Suspense fallback={"loading..."}>
-        {RemoteApp ? <RemoteApp /> : null}
+      <button onClick={setApp}>Load App 2 Widget</button>
+      <Suspense fallback="Loading System">
+        {Component ? <Component /> : null}
       </Suspense>
     </div>
   );

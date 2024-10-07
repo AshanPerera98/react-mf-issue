@@ -1,4 +1,6 @@
-const { ModuleFederationPlugin } = require("webpack").container;
+const {
+  ModuleFederationPlugin,
+} = require("@module-federation/enhanced/webpack");
 
 module.exports = {
   devServer: {
@@ -8,14 +10,16 @@ module.exports = {
     plugins: {
       add: [
         new ModuleFederationPlugin({
-          name: "RemoteApp",
+          name: "ShellApp",
           filename: "remoteEntry.js",
           exposes: {
             "./App": "./src/App",
           },
           shared: {
-            react: { singleton: true, eager: true },
-            "react-router": { singleton: true, eager: true },
+            react: { singleton: true },
+            "react-router": { singleton: true },
+            redux: { singleton: true },
+            "react-redux": { singleton: true },
           },
         }),
       ],
