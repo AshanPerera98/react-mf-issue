@@ -1,4 +1,6 @@
-const { ModuleFederationPlugin } = require("webpack").container;
+const {
+  ModuleFederationPlugin,
+} = require("@module-federation/enhanced/webpack");
 
 module.exports = {
   devServer: {
@@ -18,11 +20,11 @@ module.exports = {
           },
           shared: [
             {
-              react: { singleton: true, eager: true },
-              "react-router": { singleton: true, eager: true },
+              react: { singleton: true },
+              "react-router": { singleton: true },
+              redux: { singleton: true },
+              "react-redux": { singleton: true },
             },
-            // below line is the breaking change
-            "./src/App",
           ],
         }),
       ],
